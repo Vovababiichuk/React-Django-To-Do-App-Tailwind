@@ -8,10 +8,15 @@ function App() {
   const [editStatus, setEditStatus] = useState(false);
   const [editName, setEditName] = useState('');
   const [openEditUI, setOpenEditUI] = useState(false);
+  const [editTodo, setEditTodo] = useState({});
 
   const addTodoHandler = () => {
     console.log('add todo');
   };
+
+  const editTodoHandler = (id) => {
+    console.log(id);
+  }
 
   const deleteTodoHandler = () => {
     console.log('delete');
@@ -54,6 +59,7 @@ function App() {
                 setOpenEditUI(true);
                 setEditStatus(todo.status);
                 setEditName(todo.name);
+                setEditTodo(todo);
               }} className="cursor-pointer">
                 {todo.name}{' '}
                 {todo.status && <span className="text-xs text-gray-300">(Completed)</span>}
@@ -70,7 +76,7 @@ function App() {
           openEditUI ? 'block' : 'hidden'
         } w-72 h-fit bg-white text-slate-900 absolute left-1/2 rounded-xl px-3 py-2 -translate-x-1/2 -translate-y-1/2`}>
         <div className="flex items justify-between">
-          <h1>Edit Todo</h1>
+          <h1 className='text-xl mb-2 '>Edit Todo</h1>
           <i onClick={() => setOpenEditUI(false)}>
             <XMarkIcon className="icons" />
           </i>
@@ -81,15 +87,18 @@ function App() {
             className="h-5 w-5"
             checked={editStatus}
             onChange={() => setEditStatus(!editStatus)}
-          />
+          /> <i>Status</i>
         </div>
         <div>
           <input 
           type="text" 
-          className="w-full px-3 py-2 bg-gray-300 rounded-xl" 
+          className="w-full px-3 py-2 bg-slate-600 rounded-xl text-white outline-none"
           placeholder='Change here name' value={editName} onChange={(e) => setEditName(e.target.value)}
           />
         </div>
+        <button onClick={() => editTodoHandler(editTodo.id)} className='w-full p-2 rounded-xl bg-green-700 text-white mt-2'>
+          Update
+        </button>
       </div>
     </div>
   );
