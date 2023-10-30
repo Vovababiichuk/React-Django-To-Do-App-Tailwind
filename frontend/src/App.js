@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -7,8 +7,12 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   const addTodoHandler = () => {
-    console.log('click');
+    console.log('add todo');
   };
+
+  const deleteTodoHandler = () => {
+    console.log('delete');
+  }
 
   //для отримання API ми використовуємо useEffect
   useEffect(() => {
@@ -42,8 +46,17 @@ function App() {
           {todos?.map((todo, index) => (
             <div
               key={todo.id}
-              className="max-w-md mx-auto w-full p-5 h-full rounded-xl bg-blue-500 flex items-center justify-between">
-              <p>{todo.name}</p>
+              className="max-w-md mx-auto w-full p-5 h-full rounded-xl bg-blue-500 flex items-center justify-between cursor-pointer">
+              <p className='cursor-pointer'>
+                {todo.name}
+                {" "}
+                {todo.status && (
+                  <span className='text-xs text-gray-300'>(Completed)</span>
+                )}
+              </p>
+              <i onClick={() => deleteTodoHandler(todo.id)}>
+                <TrashIcon className='h-5 w-5 cursor-pointer hover:opacity-70' />
+              </i>
             </div>
           ))}
         </div>
