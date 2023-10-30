@@ -29,8 +29,14 @@ function App() {
     console.log(id);
   };
 
-  const deleteTodoHandler = () => {
-    console.log('delete');
+  const deleteTodoHandler = (id) => {
+    const deleteTodo = async() => {
+      await axios.delete(`http://127.0.0.1:8000/todos/${id}`);
+      //ми повинні відфільтрувати те що буде показуватися
+      const newTodos = todos.filter((todo) => todo.id !== id);
+      setTodos(newTodos);
+    }
+    deleteTodo();
   };
 
   //для отримання API ми використовуємо useEffect
